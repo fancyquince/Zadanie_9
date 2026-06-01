@@ -46,7 +46,7 @@ class RentManager:
         self.tenants[tenant_id] = tenant
         return True
 
-    def calculate_bill(self, tenant_id, month, year, discount=0):
+        # def calculate_bill(self, tenant_id, month, year, discount=0):
         if tenant_id not in self.tenants:
             return None
         base = self.tenants[tenant_id].get("rent", 0)
