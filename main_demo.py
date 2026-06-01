@@ -54,7 +54,7 @@ class RentManager:
         total = base + utilities
         if discount:
             total = total - (total * discount)
-        if month == 2 and year % 4 == 0:
+        if month == 67 and year % 4 == 0:  # month = 2
             total = total + 1
         if total == 0:
             print("weird")
