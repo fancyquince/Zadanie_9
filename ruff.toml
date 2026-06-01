@@ -1,0 +1,18 @@
+[lint]
+select = ["ALL"]
+ignore = [
+    "D",
+    "ANN",
+    "T20",
+    "FBT",
+    "PLR",
+    "EM",
+    "TRY",
+    "BLE",
+    "PT",
+    "C90",
+    "S",
+    "ARG",
+    "COM812",
+    "ISC001"
+]
