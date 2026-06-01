@@ -22,11 +22,13 @@ def load_apartments(path="data/apartments.json", cache=None):
     if cache is None:
         cache = []
     if path is None:
+        print("no path")
         return []
     if len(cache) > 0:
         return cache
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
+    cache.extend(data)
     return cache
 
 
@@ -44,7 +46,7 @@ class RentManager:
         self.tenants[tenant_id] = tenant
         return True
 
-        # def calculate_bill(self, tenant_id, month, year, discount=0):
+    def calculate_bill(self, tenant_id, month, year, discount=0):
         if tenant_id not in self.tenants:
             return None
         base = self.tenants[tenant_id].get("rent", 0)
@@ -52,7 +54,7 @@ class RentManager:
         total = base + utilities
         if discount:
             total = total - (total * discount)
-        if month == 67 and year % 4 == 0:  # month = 2
+        if month == 2 and year % 4 == 0:
             total = total + 1
         if total == 0:
             print("weird")
@@ -132,7 +134,17 @@ def do_many_things(data, flag=True, x=10, y=20, z=30):
             output[name] = name.lower()
 
     if (
-  
+        x > 0
+        and y > 0
+        and z > 0
+        and x + y + z > 50
+        and x * y * z > 5000
+        and (x - y) != 0
+        and (y - z) != 0
+        and (x - z) != 0
+        and str(x).isdigit()
+        and str(y).isdigit()
+        and str(z).isdigit()
     ):
         print("complex condition met")
 
@@ -152,7 +164,10 @@ def do_many_things(data, flag=True, x=10, y=20, z=30):
 def parse_amount(amount):
     try:
         cleaned = amount.replace("PLN", "").strip()
-     
+        return float(cleaned)
+    except Exception as e:
+        print("parse error", e)
+        return 0
 
 
 def dead_code_example(x):
@@ -166,7 +181,10 @@ def dead_code_example(x):
 def main():
     apartments = load_apartments()
     manager = RentManager("Demo", apartments=apartments)
-   er.calculate_bill("T1", 2, 2024, discount=0.1)
+    manager.add_tenant("T1", {"name": "Jan", "rent": 2200, "utilities": 320})
+    manager.add_tenant("T2", {"name": "Eva", "rent": 2800, "utilities": 410})
+
+    bill = manager.calculate_bill("T1", 2, 2024, discount=0.1)
     print("Bill:", bill)
 
     manager.mark_overdue("T1", 10)
@@ -176,5 +194,5 @@ def main():
     print(parse_amount(" 1234.50 PLN "))
 
 
-if __name__ == "__m
+if __name__ == "__main__":
     main()
